@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vellum",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2025-05-05",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    {
+      "pattern": "vellum.juuni.dev",
+      "custom_domain": true
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vellum-db",
+      "database_id": "22050bfc-278c-48bd-90ae-62f9eb9ccc2e",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "vars": {
+    // Non-secret vars. Secrets (BETTER_AUTH_SECRET, STRIPE_SECRET_KEY,
+    // STRIPE_WEBHOOK_SECRET) go in .dev.vars locally / wrangler secret in prod.
+    // Local dev overrides this via APP_URL in .dev.vars.
+    "APP_URL": "https://vellum.juuni.dev"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

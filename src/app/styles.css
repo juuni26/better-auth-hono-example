@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+  /* ----- Vellum palette: warm ink + molten gold ----- */
+  --color-ink-950: #0e0c09;
+  --color-ink-900: #14110d;
+  --color-ink-850: #181410;
+  --color-ink-800: #1e1914;
+  --color-ink-700: #2a2419;
+  --color-ink-600: #3a3326;
+
+  --color-gold-300: #f3d695;
+  --color-gold-400: #ecc578;
+  --color-gold-500: #e5b45b;
+  --color-gold-600: #c89a45;
+
+  --color-ivory: #f2ead9;
+  --color-ivory-dim: #c9bda4;
+  --color-ivory-faint: #978b73;
+
+  --color-moss: #a3c585;
+  --color-ember: #e5736b;
+
+  /* ----- shadcn-style semantic tokens ----- */
+  --color-background: var(--color-ink-950);
+  --color-foreground: var(--color-ivory);
+  --color-card: var(--color-ink-900);
+  --color-card-foreground: var(--color-ivory);
+  --color-popover: #1b1712;
+  --color-popover-foreground: var(--color-ivory);
+  --color-primary: var(--color-gold-500);
+  --color-primary-foreground: #1a1404;
+  --color-secondary: var(--color-ink-800);
+  --color-secondary-foreground: var(--color-ivory);
+  --color-muted: var(--color-ink-800);
+  --color-muted-foreground: var(--color-ivory-faint);
+  --color-accent: var(--color-ink-700);
+  --color-accent-foreground: var(--color-ivory);
+  --color-destructive: var(--color-ember);
+  --color-destructive-foreground: #fff5f3;
+  --color-border: rgba(229, 180, 91, 0.14);
+  --color-input: rgba(242, 234, 217, 0.1);
+  --color-ring: var(--color-gold-500);
+
+  /* ----- type ----- */
+  --font-display: "Fraunces Variable", "Georgia", serif;
+  --font-sans: "Schibsted Grotesk Variable", "Helvetica Neue", sans-serif;
+  --font-mono: "Spline Sans Mono Variable", "SF Mono", monospace;
+
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem;
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.6s ease both;
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: -200% 0;
+    }
+    to {
+      background-position: 200% 0;
+    }
+  }
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground font-sans antialiased;
+  font-feature-settings: "ss01";
+  text-rendering: optimizeLegibility;
+}
+
+/* Display serif gets Fraunces' soul: high optical size, a hint of wonk. */
+.font-display {
+  font-variation-settings:
+    "opsz" 120,
+    "SOFT" 40,
+    "WONK" 0;
+  letter-spacing: -0.02em;
+}
+
+.font-display-wonk {
+  font-variation-settings:
+    "opsz" 144,
+    "SOFT" 60,
+    "WONK" 1;
+}
+
+/* Money figures: mono + tabular so columns never wobble. */
+.figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Film-grain overlay — atmosphere without weight. */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Gold halo used behind heroes/cards. */
+.halo {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 0%, rgba(229, 180, 91, 0.13), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 80% 10%, rgba(229, 180, 91, 0.06), transparent 60%);
+}
+
+/* Hairline gold rule with fade. */
+.rule-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(229, 180, 91, 0.45), transparent);
+}
+
+::selection {
+  background: rgba(229, 180, 91, 0.35);
+  color: #fff8ea;
+}
+
+/* Scrollbars that match the room. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-ink-600) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-ink-600);
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
